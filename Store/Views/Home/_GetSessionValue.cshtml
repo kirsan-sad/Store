@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@GetSessionText()
+
+@functions
+{
+    public string GetSessionText()
+    {
+        var name = Context.Session.GetString("Name");
+        return !string.IsNullOrEmpty(name) ? $"Добро пожаловать, {name}" : string.Empty;
+    }
+}
