@@ -8,15 +8,8 @@ using System.Text;
 
 namespace StoreDAL.Repositories
 {
-    public class ItemRepositoryEFCore : IRepositoryGetItem<Item>
+    public class EFCoreRepositoryGetItem : IRepositoryGetItem<Item>
     {
-        private readonly DbContextOptions<DataContext> _dbContextOptios;
-
-        public ItemRepositoryEFCore(DbContextOptions<DataContext> dbContextOptios)
-        {
-            _dbContextOptios = dbContextOptios;
-        }
-
         public ICollection<Item> GetItemByCategory(string categoryName)
         {
             if (string.IsNullOrEmpty(categoryName))
@@ -24,11 +17,11 @@ namespace StoreDAL.Repositories
 
             ICollection<Item> resultItems;
 
-            using (var context = new DataContext(_dbContextOptios))
+            using (var context = new DataContext())
             {
-                resultItems = context.Items
-                    .Include(c => c.ItemCategories)
-                    .ThenInclude(cat => cat.Name == categoryName)
+                resultItems = context.ItemCategoryes
+                    .Where(category => category.Name == categoryName)
+                    .SelectMany(items => items.Items)
                     .ToList();
             }
 

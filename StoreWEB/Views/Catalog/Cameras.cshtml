@@ -1,0 +1,26 @@
+﻿@using StoreDAL.Entity;
+@{
+    ViewData["Title"] = "Home Page";
+}
+<nav class="col-xl-2">
+    @await Html.PartialAsync("_GetCategories")
+</nav>
+<article class="col-md-14 col-xl-10">
+    <div class="text-center">
+        <h1 class="display-4">All cameras in catalog</h1>
+        <p>
+            <table class="table table-hover">
+                <tr><th>Id</th><th>Name</th><th>Description</th><th>Price</th></tr>
+                @foreach (var item in ViewBag.Content)
+                {
+                    <tr>
+                        <td>@item.ItemId</td>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </p>
+    </div>
+</article>

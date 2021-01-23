@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StoreBL;
+using StoreDAL;
+using StoreDAL.Entity;
+using StoreDAL.Repositories;
 
 namespace StoreWEB
 {
@@ -23,7 +27,10 @@ namespace StoreWEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataContext>();
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddSingleton<IRepositoryGetItem<Item>, EFCoreRepositoryGetItem>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +50,7 @@ namespace StoreWEB
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
