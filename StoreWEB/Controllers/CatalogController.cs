@@ -56,5 +56,15 @@ namespace StoreWEB.Controllers
             ViewBag.Content = result;
             return View();
         }
+
+        public IActionResult Details (int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var item = _repositoryGetItem.GetItemById(id);
+
+            return View(item);
+        }
     }
 }

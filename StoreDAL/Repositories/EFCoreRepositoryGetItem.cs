@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StoreBL;
+using StoreBL.Models;
 using StoreDAL.Entity;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,22 @@ namespace StoreDAL.Repositories
             }
 
             return resultItems;
+        }
+
+        public BlItem GetItemById(int? id)
+        {
+            if (id == null)
+                throw new NullReferenceException();
+
+            BlItem resultItem;
+
+            using (var context = new DataContext())
+            {
+                resultItem = context.Items
+                    .FirstOrDefault(item => item.ItemId == id).ToItemModel();
+            }
+
+            return resultItem;
         }
     }
 }

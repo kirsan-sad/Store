@@ -10,7 +10,7 @@
         <h1 class="display-4">All cameras in catalog</h1>
         <p>
             <table class="table table-hover">
-                <tr><th>Id</th><th>Name</th><th>Description</th><th>Price</th></tr>
+                <tr><th>Id</th><th>Name</th><th>Description</th><th>Price</th><th>Options</th></tr>
                 @foreach (var item in ViewBag.Content)
                 {
                     <tr>
@@ -18,6 +18,7 @@
                         <td>@item.Name</td>
                         <td>@item.Description</td>
                         <td>@item.Price</td>
+                        <td><a asp-controller="Catalog" asp-action="Details" asp-route-id="@item.ItemId">Details</a></td>
                     </tr>
                 }
             </table>
